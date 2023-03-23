@@ -25,9 +25,13 @@ Determine which schema your geodatabases are configured in. This will typically 
 Recommended:
 	Set up an admin geodatabase where you can create views, tables, and stored procedures to monitor other geodatabases. 
 
-1. Within each geodatabase execute the `dbo.GDBDeltaInfo.StoredProcedure.sql`
+1. Within each SQL script the `USE --[Admin Database]` or `USE Database` lines will need to be updated to reflect the appropriate database. 
+
+2. Within each SQL script (except `dbo.GDBDeltaInfo.StoredProcedure.sql`), if a database needs to be excluded from the iteration then modify the `'IF ''?'' NOT IN('''') BEGIN USE ? ` line to include the database(s) like so `'IF ''?'' NOT IN(''[Database]'') BEGIN USE ? `.
+
+3. Within each geodatabase execute the `dbo.GDBDeltaInfo.StoredProcedure.sql`
 	- This will look at the adds, deletes, and insert tables and compile a table organizing everything. 
-2. Within the admin database execute all other sql sqripts:
+4. Within the admin database execute all other sql sqripts:
 ```
     📝dbo.GDBConnections.StoredProcedure.sql
     📝dbo.GDBFields.StoredProcedure.sql
@@ -39,7 +43,7 @@ Recommended:
     📝dbo.GDBVersions.StoredProcedure.sql
 ```
 
-## Executing
+## Executing/Running
 
 Executing each stored procedure is as simple as typing the following in SQL Server Management Studio (or any other sql query interface):
 
